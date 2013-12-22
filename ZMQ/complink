@@ -1,0 +1,2 @@
+gcc s1.c  -lzmq -lzmq    -o s1
+gcc c1.c  -lzmq -lzmq    -o c1
