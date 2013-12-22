@@ -15,8 +15,8 @@ Read documentation in click.php
 
 
 Instalation:
-	1. Apache2 web server+ php5 , contianing wwrpi dir. 
+	1. Apache2 web server+ php5. Copy wwwrpi to htdocs.
 	2. Change address in index.html and click.php to coresponding webserver and directories.
-	3. Run servers
+	3. Run servers ZMQ/s1
 
 
