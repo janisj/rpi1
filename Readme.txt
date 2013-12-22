@@ -1,10 +1,10 @@
 Direcotries:
 
-proj1		- web server implementatio. Should be linked/copied in httdocs.
+wwwrpi		- web server implementatio. Should be linked/copied in httdocs.
 zmq		- zmq implementations.
 
 
-Files: proj1/
+Files: wwwrpi/
 
 index.html	- main web page.
 click.php	- ajax requests from index. html  using POST.
