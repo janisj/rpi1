@@ -43,7 +43,7 @@ if (array_key_exists('data',$_POST) && array_key_exists('id',$_POST))
 	$arr_conf=json_decode($conf, true);
 	if (is_array($arr_conf) && array_key_exists($id, $arr_conf)){
 		//$address='/opt/lampp/htdocs/proj1/c1 '.$arr_conf[$id]['address'].' '. $arr_conf[$id]['command'][$data].' 2>&1';
-		$address='/opt/lampp/htdocs/proj1/c1 '.$arr_conf[$id]['address'].' '. $arr_conf[$id]['command'][$data];
+		$address='/opt/lampp/htdocs/wwwrpi/c1 '.$arr_conf[$id]['address'].' '. $arr_conf[$id]['command'][$data];
 		//check config.json file
 		$return=1;
 		$str=exec($address,$output,$return);

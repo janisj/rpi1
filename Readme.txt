@@ -14,6 +14,7 @@ c1		- ZMQ client called form click.php.
 Read documentation in click.php
 
 
-
+Instalation:
+	1. change address in index.html and click.php
 
 

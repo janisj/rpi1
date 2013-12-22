@@ -60,7 +60,8 @@ $("form").click(function(){
 		var posting =$.post("http://192.168.1.113/wwwrpi/click.php",obj,function( data ) {
 					//alert( "Data Loaded: ");
 					$divloading.html($oldtext);
-					setRadio(data.id,data.data);debugResponse(data);}
+					setRadio(data.id,data.data);
+					debugResponse(data);}
 				,"json")
 				.fail(function(){alert("failed post!");
 					$divloading.html($oldtext);
