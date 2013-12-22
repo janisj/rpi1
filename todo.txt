@@ -1,4 +1,4 @@
-1.no security...
-2.client  is hangin, when there is  no server
+1.no security..., https
+2.client  is hangin, when there is  no server.... lazy pirate
 3.on sartup  server should drop old messages 
 
