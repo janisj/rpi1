@@ -1,6 +1,6 @@
 Direcotries:
 
-wwwrpi		- web server implementatio. Should be linked/copied in httdocs.
+wwwrpi		- web server implementation. Should be linked/copied in httdocs.
 zmq		- zmq implementations.
 
 
@@ -15,6 +15,8 @@ Read documentation in click.php
 
 
 Instalation:
-	1. change address in index.html and click.php
+	1. Apache2 web server+ php5 , contianing wwrpi dir. 
+	2. Change address in index.html and click.php to coresponding webserver and directories.
+
 
 
