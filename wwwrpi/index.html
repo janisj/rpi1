@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Led example</title>
+    </head>
+    <body>
+        <h1>Led example</h1
+	<div>
+	Led1:
+	<form name="led1" id="fled1" action="" method="">
+		<input type="radio" name="led1" id="led1on"  value="ledon" >On
+		<input type="radio" name="led1" id="led1off" value="ledoff">Off
+		<div id="loading"></div>	
+	</form>
+	</div>
+	<div  id="result"> 
+	</div>
+
+<script type="text/javascript" >
+
+
+//alert("Welcome to my world!!!");
+$(document).ready(function() {  
+    // all jQuery code goes here  
+
+// should store current state values...
+
+
+$.ajaxSetup ({
+		cache: false
+	});
+
+function setRadio(id, data){
+
+	$("input[name="+id+"]:radio[value="+data+"]").prop("checked",true);
+	if($("input[name="+id+"]:radio[value="+data+"]").length<1){alert('Bad response id:'+id);} 	
+}
+function debugResponse(data){
+	//$("#result").text(data);
+	$("#result").text('Response:'+JSON.stringify(data));
+}
+
+$("form").click(function(){
+
+	// get checked radio element that has come from this form
+	// send post and process the response 
+	var $id = $( this ).attr("id");
+	var rbtn=$('#'+$id+" :radio:checked").first();	
+	var $divloading=$("#"+$id );//+" div")
+	var $oldtext=$divloading.html();
+
+//	$id.html("Loading...");
+	if (rbtn.length>0)
+		{
+		var obj={id:rbtn.attr("name"),data:rbtn.val()};
+		//alert("ook");
+		$divloading.text("Loading ...");
+		var posting =$.post("http://192.168.1.113/wwwrpi/click.php",obj,function( data ) {
+					//alert( "Data Loaded: ");
+					$divloading.html($oldtext);
+					setRadio(data.id,data.data);debugResponse(data);}
+				,"json")
+				.fail(function(){alert("failed post!");
+					$divloading.html($oldtext);
+					debugResponse(data);})
+				.always();
+		}
+						
+
+		
+	});
+
+});
+</script>
+
+</body>
+</html>

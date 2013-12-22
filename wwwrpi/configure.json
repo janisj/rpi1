@@ -1,0 +1,20 @@
+{"led1":{
+  "address":"tcp://localhost:5555",
+  "type": "",
+  "description":"This is led on-off example json configuration.",
+  "command": {
+    "ledon": "ledon",
+    "ledoff": "ledoff"
+  }},
+  
+ "led2":{
+  "address":"tcp://localhost:5555",
+  "type": "",
+  "comment": " not implemented yet",
+  "description":"This is led on-off example json configuration.",
+  "command": {
+    "ledon": "ledon",
+    "ledoff": "ledoff"
+  }
+}
+}
