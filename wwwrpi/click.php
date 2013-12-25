@@ -1,13 +1,9 @@
 <?php
 include 'lib.php';
 
-// have to:
-//	 modify lib.php use apc
-//	error handling
-//	security
-//	
-// on error prints error message...
-// sends messages via socet programm and passes back the response from the server
+// Sends messages via socet programm and passes back the response from the server.
+On error: outputs error message...
+
 /* The inputs are : $_POST['id'] (id) and $_POST['data'] (data) variables.
 	The id corresponds to the id atribute (top) in configure.json file.
 	The string in datat should be one of the the command attributes, where value of each command attribute is the actual value (command) to pass to the socket server. 
@@ -32,6 +28,9 @@ The socket server should pass back.. -- to implement pass back commad in json...
 The corresponding html file should have form element for example
 <input type="radio" name="id1" id="someuniqueid"  value="command1" >
 where the value of the attirbute name is the id to be passed as $_POST[id]. The value of the atribute value should be one of command arrays atributes "command1" or "command2".
+
+
+
 */
 
 //$_POST=$_GET;

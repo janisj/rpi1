@@ -4,7 +4,7 @@ function get_config()
 		
 		$file = file_get_contents('./configure.json',false);
 		return $file;
-/* //needs apc installation on php... to do later
+/* //needs apc installation on php belov 5.5... 
 
 	if (apc_exists('config')) {
 		return  apc_fetch('config');
