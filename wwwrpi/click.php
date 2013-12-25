@@ -35,37 +35,48 @@ where the value of the attirbute name is the id to be passed as $_POST[id]. The 
 */
 
 //$_POST=$_GET;
-if (array_key_exists('data',$_POST) && array_key_exists('id',$_POST))
-{
+try{
+
+	if (!array_key_exists('data',$_POST) || !array_key_exists('id',$_POST)){ throw new Exception('Variables are not set.'); }
 	$id=$_POST['id'];
 	$data=$_POST['data'];
 	$conf=get_config();
 	$arr_conf=json_decode($conf, true);
-	if (is_array($arr_conf) && array_key_exists($id, $arr_conf)){
-		//$address='/opt/lampp/htdocs/proj1/c1 '.$arr_conf[$id]['address'].' '. $arr_conf[$id]['command'][$data].' 2>&1';
-		$address='/opt/lampp/htdocs/wwwrpi/c1 '.$arr_conf[$id]['address'].' '. $arr_conf[$id]['command'][$data];
-		//check config.json file
-		$return=1;
-		$str=exec($address,$output,$return);
-		if($return==0){
-			$data=$output[0];
-		}else{
-		// on error 
-		$err= "comunication error";
-		echo "Error:".$err;
-		}
+	if (!is_array($arr_conf) || !array_key_exists($id, $arr_conf)){throw new Exception('Json configuration lacking item '.$id);}
+		
+	$adr=$arr_conf[$id]['address'];
+	$cmd= $arr_conf[$id]['command'][$data];
+	/*
+	//  comunicate to the server using C executable c1. 
+	//  c1 should be called: c1 address command
+	//$address='/opt/lampp/htdocs/proj1/c1 '.$arr_conf[$id]['address'].' '. $arr_conf[$id]['command'][$data].' 2>&1';
+		
+	$address='/opt/lampp/htdocs/wwwrpi/c1 '.$adr.' '.$cmd;
+	//check config.json file
+	$return=1;
+	$str=exec($address,$output,$return);
+	if($return==0){
+		$reply=$output[0];
 	}else{
-	//on error
-		$err="json configuration lacking item". $id;
+	// on error 
+	$err= "comunication error";
 	echo "Error:".$err;
-
 	}
-	
+	*/
+	// comunicate wiht server using zmq_php extension
+	//if loading problems. first check instalation. if problems check version compatibility when building zmq_php.
+	$context = new ZMQContext();
+	// Socket to talk to server
+	$requester = new ZMQSocket($context, ZMQ::SOCKET_REQ);
+	$requester->connect($adr);
+	$requester->send($cmd);
+	$reply = $requester->recv();
+
 	// create response
-	echo json_encode(array("id"=>$_POST['id'],"data"=>$data));
-	
-}else 
-{
-echo "Error:Variables are not set";
+	echo json_encode(array("id"=>$_POST['id'],"data"=>$reply));
+
+
+} catch (Exception $e) {
+    echo 'Error: ',  $e->getMessage(), "\n";
 }
 ?>
