@@ -47,7 +47,6 @@ printf("Server started...\n");
 		//q_recv (responder, buffer, 10, 0);
 		printf ("%s\n",msg);
 
-
 		char *response=take_action(msg);
 		check(response,"Processing message.");
 //		sleep(10);

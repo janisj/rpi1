@@ -1,9 +1,9 @@
 1.no security..., https
 2.implemet poll clinet in C..
 4. use zmq msg. http://zguide.zeromq.org/page:all#Working-with-Messages
-5. interputs http://zguide.zeromq.org/page:all#Handling-Interrupt-Signals
-6. use valgrind to chek for memory leaks
-7.http://zguide.zeromq.org/page:all#The-CZMQ-High-Level-API
-8. Backup servers managment, in client or rooter.
-9. Status server (Restarts other servers if there are problems)...
+5. server interputs http://zguide.zeromq.org/page:all#Handling-Interrupt-Signals
+6. valgrind to chek for memory leaks
+7. http://zguide.zeromq.org/page:all#The-CZMQ-High-Level-API
+8. Backup servers client or rooter.
+9. Status server...
 
