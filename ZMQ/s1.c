@@ -50,7 +50,7 @@ printf("Server started...\n");
 
 		char *response=take_action(msg);
 		check(response,"Processing message.");
-
+//		sleep(10);
 		rc=s_send(responder,response);//argv[2]);
 		check(rc>=0,"Sending msg. Return val=%i",rc);
 

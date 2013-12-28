@@ -1,5 +1,9 @@
 1.no security..., https
-2.client  is hangin, when there is  no server.... lazy pirate
-3.on sartup  server should drop old messages 
-
+2.implemet poll clinet in C..
+4. use zmq msg. http://zguide.zeromq.org/page:all#Working-with-Messages
+5. interputs http://zguide.zeromq.org/page:all#Handling-Interrupt-Signals
+6. use valgrind to chek for memory leaks
+7.http://zguide.zeromq.org/page:all#The-CZMQ-High-Level-API
+8. Backup servers managment, in client or rooter.
+9. Status server (Restarts other servers if there are problems)...
 

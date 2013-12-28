@@ -61,10 +61,12 @@ $("form").click(function(){
 		var posting =$.post("http://localhost/wwwrpi/click.php",obj,function( data ) {
 					//alert( "Data Loaded: ");
 					$divloading.html($oldtext);
-					setRadio(data.id,data.data);
+					if (data.hasOwnProperty('error')) {
+						alert("Error: "+data.error);}
+						if (data.hasOwnProperty('id')){setRadio(data.id,data.data);}
 					debugResponse(data);}
 				,"json")
-				.fail(function(){alert("failed post!");
+				.fail(function(){alert("Post failed..");
 					$divloading.html($oldtext);
 					debugResponse(data);})
 				.always();

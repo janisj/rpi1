@@ -1,8 +1,9 @@
 <?php
 include 'lib.php';
-
+define("REQUEST_TIMEOUT", 100);//msec
+define("REPEAT_REQUEST",10);// REPEAT_RQUEST*REQUEST_TIMEOUT gives total time to wait for server to respond
 // Sends messages via socet programm and passes back the response from the server.
-On error: outputs error message...
+//On error: outputs error message...
 
 /* The inputs are : $_POST['id'] (id) and $_POST['data'] (data) variables.
 	The id corresponds to the id atribute (top) in configure.json file.
@@ -41,7 +42,9 @@ try{
 	$data=$_POST['data'];
 	$conf=get_config();
 	$arr_conf=json_decode($conf, true);
+//	var_dump($arr_conf);
 	if (!is_array($arr_conf) || !array_key_exists($id, $arr_conf)){throw new Exception('Json configuration lacking item '.$id);}
+	if (!array_key_exists('command',$arr_conf[$id]) || !array_key_exists($data,$arr_conf[$id]['command'])){throw new Exception('Json configuration item:'.$id.' lacking command:'.$data);}
 		
 	$adr=$arr_conf[$id]['address'];
 	$cmd= $arr_conf[$id]['command'][$data];
@@ -61,21 +64,47 @@ try{
 	$err= "comunication error";
 	echo "Error:".$err;
 	}
-	*/
+	 */
+
+
 	// comunicate wiht server using zmq_php extension
+	// uses poll for non blocking request,
 	//if loading problems. first check instalation. if problems check version compatibility when building zmq_php.
 	$context = new ZMQContext();
 	// Socket to talk to server
 	$requester = new ZMQSocket($context, ZMQ::SOCKET_REQ);
+	$requester->setSockOpt(ZMQ::SOCKOPT_LINGER, 0);
 	$requester->connect($adr);
+
 	$requester->send($cmd);
-	$reply = $requester->recv();
+	// Poll socket for a reply, with timeout
+	$poll = new ZMQPoll();
+	$poll->add($requester, ZMQ::POLL_IN);
+//	$reply = $requester->recv();
 
-	// create response
-	echo json_encode(array("id"=>$_POST['id'],"data"=>$reply));
 
+	$read = array();
 
-} catch (Exception $e) {
-    echo 'Error: ',  $e->getMessage(), "\n";
+	for($tmpi=1;$tmpi<REPEAT_REQUEST;$tmpi++){
+
+		$events = $poll->poll($read, $write, REQUEST_TIMEOUT);
+		// If we got a reply, process it
+		if ($events > 0) {
+			// Configure socket to not wait at close time
+			// create response
+			$reply=$read[0]->recv();
+			echo json_encode(array("id"=>$_POST['id'],"data"=>$reply));
+			break;
+		}
+	}
+	if ($events==0){
+			// no response.
+			throw new Exception('No response'); 
+		}
+	
+
+}catch (Exception $e) {
+    //echo 'Error: ',  $e->getMessage(), "\n";
+	echo json_encode(array("error"=>$e->getMessage()));
 }
 ?>
